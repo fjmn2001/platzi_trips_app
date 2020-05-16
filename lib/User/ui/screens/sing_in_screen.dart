@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzitripsapp/User/bloc/bloc_user.dart';
 import 'package:platzitripsapp/widgets/button_green.dart';
 import 'package:platzitripsapp/widgets/gradient_back.dart';
 
@@ -11,8 +14,12 @@ class SingInScreen extends StatefulWidget {
 }
 
 class _SingInScreen extends State<SingInScreen> {
+
+  UserBloc _userBloc = UserBloc();
+
   @override
   Widget build(BuildContext context) {
+    _userBloc = BlocProvider.of(context);
     return singInGoogleUI();
   }
 
@@ -36,7 +43,11 @@ class _SingInScreen extends State<SingInScreen> {
               ),
               ButtonGreen(
                 text: 'Login with Gmail',
-                onPressed: () {},
+                onPressed: () {
+                  _userBloc.singIn().then((FirebaseUser user) {
+                    print('El nombre del usuario es ${user.displayName}');
+                  });
+                },
                 width: 300,
                 height: 50,
               )
