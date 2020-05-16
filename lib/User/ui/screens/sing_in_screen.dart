@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:platzitripsapp/widgets/button_green.dart';
 import 'package:platzitripsapp/widgets/gradient_back.dart';
 
 class SingInScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _SingInScreen extends State<SingInScreen> {
         children: <Widget>[
           GradientBack('', null),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 'Welcome \n this is your travel app',
@@ -31,6 +33,12 @@ class _SingInScreen extends State<SingInScreen> {
                   color: Colors.white,
                   fontWeight: FontWeight.bold
                 ),
+              ),
+              ButtonGreen(
+                text: 'Login with Gmail',
+                onPressed: () {},
+                width: 300,
+                height: 50,
               )
             ],
           )
