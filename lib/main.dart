@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:platzitripsapp/User/ui/screens/sing_in_screen.dart';
 import 'package:platzitripsapp/platzi_trips.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'User/bloc/bloc_user.dart';
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PlaztiTrips(),
+      //home: PlaztiTrips(),
+      home: SingInScreen(),
     ), bloc: UserBloc());
   }
 }
