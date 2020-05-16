@@ -12,6 +12,8 @@ class UserBloc extends Bloc {
     return _authRepository.singInFirebase();
   }
 
+  void singOut() => _authRepository.singOut();
+
   @override
   void dispose() {
 

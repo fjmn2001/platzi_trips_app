@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitripsapp/Place/ui/screens/search_trips.dart';
-
+import 'package:platzitripsapp/User/bloc/bloc_user.dart';
 import 'Place/ui/screens/home_trips.dart';
+import 'User/ui/screens/profile_trips.dart';
 
 class PlatziTripsCupertino extends StatelessWidget {
   @override
@@ -20,6 +22,13 @@ class PlatziTripsCupertino extends StatelessWidget {
             case 1:
               return CupertinoTabView(
                 builder: (BuildContext context) => SearhTrips(),
+              );
+              break;
+            case 2:
+              return CupertinoTabView(
+                builder: (BuildContext context) {
+                  return BlocProvider<UserBloc>(child: ProfileTrips(), bloc: UserBloc());
+                },
               );
               break;
           }
