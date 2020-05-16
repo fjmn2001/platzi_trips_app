@@ -57,10 +57,9 @@ class _SingInScreen extends State<SingInScreen> {
               ),
               ButtonGreen(
                 text: 'Login with Gmail',
-                onPressed: () {
-                  _userBloc.singIn().then((FirebaseUser user) {
-                    print('El nombre del usuario es ${user.displayName}');
-                  });
+                onPressed: () async {
+                  await _userBloc.singOut();
+                  await _userBloc.singIn();
                 },
                 width: 300,
                 height: 50,
