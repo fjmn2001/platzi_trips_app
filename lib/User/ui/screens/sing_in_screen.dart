@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitripsapp/User/bloc/bloc_user.dart';
+import 'package:platzitripsapp/platzi_trips_cupertino.dart';
 import 'package:platzitripsapp/widgets/button_green.dart';
 import 'package:platzitripsapp/widgets/gradient_back.dart';
 
@@ -20,7 +21,20 @@ class _SingInScreen extends State<SingInScreen> {
   @override
   Widget build(BuildContext context) {
     _userBloc = BlocProvider.of(context);
-    return singInGoogleUI();
+    return _handleCurrentSession();
+  }
+
+  Widget _handleCurrentSession() {
+    return StreamBuilder(
+      stream: _userBloc.authStatus,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if(!snapshot.hasData || snapshot.hasError){
+          return singInGoogleUI();
+        } else {
+          return PlatziTripsCupertino();
+        }
+      },
+    );
   }
 
   Widget singInGoogleUI() {

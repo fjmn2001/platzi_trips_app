@@ -5,6 +5,8 @@ import 'package:platzitripsapp/User/repository/auth_repository.dart';
 class UserBloc extends Bloc {
 
   final AuthRepository _authRepository = AuthRepository();
+  Stream<FirebaseUser> streamFirebase = FirebaseAuth.instance.onAuthStateChanged;
+  Stream<FirebaseUser> get authStatus => streamFirebase;
 
   Future<FirebaseUser> singIn() {
     return _authRepository.singInFirebase();
