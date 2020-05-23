@@ -67,12 +67,12 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                     pathImage: 'assets/img/logojetbrain.png',
                     iconData: Icons.camera_alt,
                     left: 20,
-                    height: 350,
-                    width: 250,
+                    height: 250,
+                    width: 350,
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: EdgeInsets.only(bottom: 20, top: 20),
                   child: TextInput(
                     hintText: 'Title',
                     textInputType: null,
