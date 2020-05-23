@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:platzitripsapp/Place/ui/widgets/card_image_with_fab_icon.dart';
 import 'package:platzitripsapp/Place/ui/widgets/text_input_location.dart';
 import 'package:platzitripsapp/widgets/gradient_back.dart';
 import 'package:platzitripsapp/widgets/text_input.dart';
@@ -59,7 +60,17 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
             margin: EdgeInsets.only(top: 120, bottom: 20),
             child: ListView(
               children: <Widget>[
-                Container(),
+                Container(
+                  alignment: Alignment.center,
+                  child: CardImageWithFabIcon(
+                    //pathImage: widget.image.path,
+                    pathImage: 'assets/img/logojetbrain.png',
+                    iconData: Icons.camera_alt,
+                    left: 20,
+                    height: 350,
+                    width: 250,
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.only(bottom: 20),
                   child: TextInput(

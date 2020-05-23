@@ -2,21 +2,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:platzitripsapp/widgets/floating_action_button_green.dart';
 
-class CardImage extends StatelessWidget {
-  String pathImage = 'assets/img/cachapa-con-queso.jpg';
+class CardImageWithFabIcon extends StatelessWidget {
+  final double height;
+  final double width;
+  final double left;
+  final String pathImage;
+  final VoidCallback onPressedFabIcon;
+  final IconData iconData;
 
-  CardImage(this.pathImage);
+  CardImageWithFabIcon({
+    Key key,
+    @required this.height,
+    @required this.width,
+    @required this.left,
+    @required this.pathImage,
+    @required this.onPressedFabIcon,
+    @required this.iconData
+  });
 
   @override
   Widget build(BuildContext context) {
     final card = Container(
-      height: 350,
-      width: 250,
-      margin: EdgeInsets.only(top: 80, left: 20),
+      height: height,
+      width: width,
+      margin: EdgeInsets.only(left: left),
       decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(this.pathImage),
+            image: AssetImage(pathImage),
           ),
           borderRadius: BorderRadius.all(Radius.circular(10)),
         shape: BoxShape.rectangle,
@@ -33,7 +46,10 @@ class CardImage extends StatelessWidget {
       alignment: Alignment(0.9, 1.1),
       children: <Widget>[
         card,
-        FloatingActionButtonGreen()
+        FloatingActionButtonGreen(
+          iconData: iconData,
+          onPressed: onPressedFabIcon,
+        )
       ],
     );
   }
