@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzitripsapp/Place/model/place.dart';
 import 'package:platzitripsapp/Place/ui/widgets/card_image_with_fab_icon.dart';
 import 'package:platzitripsapp/Place/ui/widgets/text_input_location.dart';
+import 'package:platzitripsapp/User/bloc/bloc_user.dart';
 import 'package:platzitripsapp/widgets/button_purple.dart';
 import 'package:platzitripsapp/widgets/gradient_back.dart';
 import 'package:platzitripsapp/widgets/text_input.dart';
@@ -23,11 +26,15 @@ class AddPlaceScreen extends StatefulWidget{
 }
 
 class _AddPlaceScreen extends State<AddPlaceScreen> {
+  UserBloc userBloc;
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController _titlePlace = TextEditingController();
     final TextEditingController _descriptionPlace = TextEditingController();
     final TextEditingController _locationPlace = TextEditingController();
+
+    userBloc = BlocProvider.of<UserBloc>(context);
 
     return Scaffold(
       body: Stack(
@@ -104,7 +111,15 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                     onPressed: () => {
                       //firebase storage
                       //cloud firestone
-
+                      userBloc.updatePlaceData(Place(
+                        name: _titlePlace.text,
+                        description: _descriptionPlace.text,
+                        urlImage: 'https://yt3.ggpht.com/a/AATXAJz14ZPzRqz3EJ2VvEdsUahT2Gt77bB9N5Q6gQ=s900-c-k-c0xffffffff-no-rj-mo',
+                        likes: 0
+                      )).whenComplete(() {
+                        print('FINISHED');
+                        Navigator.pop(context);
+                      })
                     }
                   ),
                 )

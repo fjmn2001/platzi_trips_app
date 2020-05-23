@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:platzitripsapp/Place/model/place.dart';
 import 'package:platzitripsapp/User/model/user.dart';
 
 class CloudFirestoneApi {
@@ -6,10 +8,12 @@ class CloudFirestoneApi {
   final String PLACES = 'places';
 
   final Firestore _db = Firestore.instance;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   void updateUserData(User user) async {
     DocumentReference ref = _db.collection(USERS).document(user.uid);
-    ref.setData({
+
+    await ref.setData({
       'uid': user.uid,
       'name': user.name,
       'email': user.email,
@@ -18,5 +22,18 @@ class CloudFirestoneApi {
       'myFavoritePlaces': user.myFavoritePlaces,
       'lastSignIn': DateTime.now()
     }, merge: true);
+  }
+
+  Future<void> updatePlaceData(Place place) async {
+    CollectionReference refPlaces = _db.collection(PLACES);
+
+    await firebaseAuth.currentUser().then((FirebaseUser user) {
+      refPlaces.add({
+        'name': place.name,
+        'description': place.description,
+        'likes': place.likes,
+        'userOwner': '${USERS}/${user.uid}'
+      });
+    });
   }
 }
