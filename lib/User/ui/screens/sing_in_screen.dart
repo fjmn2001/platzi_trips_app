@@ -18,9 +18,12 @@ class SingInScreen extends StatefulWidget {
 class _SingInScreen extends State<SingInScreen> {
 
   UserBloc _userBloc = UserBloc();
+  double screenWidth;
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+
     _userBloc = BlocProvider.of(context);
     return _handleCurrentSession();
   }
@@ -39,22 +42,29 @@ class _SingInScreen extends State<SingInScreen> {
   }
 
   Widget singInGoogleUI() {
+
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          GradientBack('', null),
+          GradientBack(height: null,),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Welcome \n this is your travel app',
-                style: TextStyle(
-                  fontSize: 37,
-                  fontFamily: 'Lato',
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold
-                ),
+              Flexible(
+                child: Container(
+                  width: screenWidth,
+                  child: Text(
+                    'Welcome \n this is your travel app',
+                    style: TextStyle(
+                      fontSize: 37,
+                      fontFamily: 'Lato',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                )
               ),
               ButtonGreen(
                 text: 'Login with Gmail',

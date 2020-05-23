@@ -7,7 +7,14 @@ class CircleButton extends StatefulWidget {
   double iconSize;
   var color;
 
-  CircleButton(this.mini, this.icon, this.iconSize, this.color, @required this.onPressed);
+  CircleButton({
+    Key key,
+    this.mini,
+    this.icon,
+    this.iconSize,
+    this.color,
+    @required this.onPressed
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -17,8 +24,6 @@ class CircleButton extends StatefulWidget {
 }
 
 class _CircleButton extends State<CircleButton> {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,7 @@ class _CircleButton extends State<CircleButton> {
           size: widget.iconSize,
           color: Color(0xFF4268D3),
         ),
+        heroTag: null,
       )
     );
   }
