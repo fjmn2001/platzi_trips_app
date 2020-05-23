@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitripsapp/User/bloc/bloc_user.dart';
+import 'package:platzitripsapp/User/model/user.dart';
 import 'package:platzitripsapp/platzi_trips_cupertino.dart';
 import 'package:platzitripsapp/widgets/button_green.dart';
 import 'package:platzitripsapp/widgets/gradient_back.dart';
@@ -59,7 +60,14 @@ class _SingInScreen extends State<SingInScreen> {
                 text: 'Login with Gmail',
                 onPressed: () async {
                   await _userBloc.singOut();
-                  await _userBloc.singIn();
+                  await _userBloc.singIn().then((FirebaseUser user) {
+                    _userBloc.updateUserData(User(
+                      uid: user.uid,
+                      name: user.displayName,
+                      email: user.email,
+                      photoURL: user.photoUrl
+                    ));
+                  });
                 },
                 width: 300,
                 height: 50,
