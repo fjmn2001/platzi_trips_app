@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitripsapp/Place/model/place.dart';
@@ -107,18 +109,31 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                   width: 70,
                   child: ButtonPurple(
                     buttonText: 'Add place',
-                    onPressed: () => {
+                    onPressed: () {
+                      userBloc.currentUser.then((FirebaseUser user) {
+                        if(user != null){
+                          String path = "${user.uid}/${DateTime.now().toString()}.jpg";
+                          userBloc.uploadFile(path, widget.image).then((StorageUploadTask uploadTask) {
+                            uploadTask.onComplete.then((StorageTaskSnapshot snapshot) {
+                              snapshot.ref.getDownloadURL().then((urlImage) {
+                                userBloc.updatePlaceData(Place(
+                                    name: _titlePlace.text,
+                                    description: _descriptionPlace.text,
+                                    urlImage: urlImage,
+                                    //urlImage: 'https://yt3.ggpht.com/a/AATXAJz14ZPzRqz3EJ2VvEdsUahT2Gt77bB9N5Q6gQ=s900-c-k-c0xffffffff-no-rj-mo',
+                                    likes: 0
+                                )).whenComplete(() {
+                                  print('FINISHED');
+                                  Navigator.pop(context);
+                                });
+                              });
+                            });
+                          });
+                        }
+                      });
                       //firebase storage
                       //cloud firestone
-                      userBloc.updatePlaceData(Place(
-                        name: _titlePlace.text,
-                        description: _descriptionPlace.text,
-                        urlImage: 'https://yt3.ggpht.com/a/AATXAJz14ZPzRqz3EJ2VvEdsUahT2Gt77bB9N5Q6gQ=s900-c-k-c0xffffffff-no-rj-mo',
-                        likes: 0
-                      )).whenComplete(() {
-                        print('FINISHED');
-                        Navigator.pop(context);
-                      })
+
                     }
                   ),
                 )
