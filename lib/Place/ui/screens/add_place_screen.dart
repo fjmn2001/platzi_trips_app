@@ -71,8 +71,7 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: CardImageWithFabIcon(
-                    //pathImage: widget.image.path,
-                    pathImage: 'assets/img/logojetbrain.png',
+                    file: widget.image,
                     iconData: Icons.camera_alt,
                     left: 20,
                     height: 250,

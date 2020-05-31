@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:platzitripsapp/Place/ui/widgets/card_image_with_fab_icon.dart';
@@ -16,21 +18,21 @@ class CardImageList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           CardImageWithFabIcon(
-            pathImage: 'assets/img/cachapa-con-queso.jpg',
+            file: File('assets/img/cachapa-con-queso.jpg'),
             iconData: Icons.favorite_border,
             left: left,
             height: height,
             width: width,
           ),
           CardImageWithFabIcon(
-            pathImage: 'assets/img/chisteone.jpg',
+            file: File('assets/img/chisteone.jpg'),
             iconData: Icons.favorite_border,
             left: left,
             height: height,
             width: width,
           ),
           CardImageWithFabIcon(
-            pathImage: 'assets/img/logojetbrain.png',
+            file: File('assets/img/logojetbrain.png'),
             iconData: Icons.favorite_border,
             left: left,
             height: height,

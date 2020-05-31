@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:platzitripsapp/Place/ui/screens/add_place_screen.dart';
 import 'package:platzitripsapp/User/bloc/bloc_user.dart';
 import 'circle_button.dart';
@@ -15,12 +16,20 @@ class ButtonsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _userBloc = BlocProvider.of(context);
+    final picker = ImagePicker();
 
-    void onPressedAdd () => {
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-        File image;
-        return AddPlaceScreen(image: image,);
-      }))
+    Future<File> getImage() async {
+      final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+      return File(pickedFile.path);
+    }
+
+    void onPressedAdd () {
+      getImage().then((File image) {
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+          return AddPlaceScreen(image: image,);
+        }));
+      }).catchError((onError) => print(onError));
     };
 
     return Padding(
