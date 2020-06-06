@@ -27,8 +27,12 @@ class UserBloc extends Bloc {
 
   //2.- register a user on database
   void updateUserData(User user) => _cloudFirestoneRepository.updateUserDataFirestone(user);
-  Stream<QuerySnapshot> _placesListStream = Firestore.instance.collection(CloudFirestoneApi().PLACES).snapshots();
-  Stream<QuerySnapshot> get placesStream => _placesListStream;
+
+  Stream<QuerySnapshot> get placesStream => Firestore.instance.collection(CloudFirestoneApi().PLACES).snapshots();
+  Stream<QuerySnapshot> myPlacesStream(String uid) => Firestore.instance
+      .collection(CloudFirestoneApi().PLACES)
+      .where('userOwner', isEqualTo: Firestore.instance.document("${CloudFirestoneApi().USERS}/${uid}"))
+      .snapshots();
 
   List<ProfilePlace> buildPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot);
 
