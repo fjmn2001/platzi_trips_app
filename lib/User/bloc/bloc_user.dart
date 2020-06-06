@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitripsapp/Place/model/place.dart';
 import 'package:platzitripsapp/Place/repository/firebase_storage_repository.dart';
+import 'package:platzitripsapp/Place/ui/widgets/card_image_with_fab_icon.dart';
 import 'package:platzitripsapp/User/model/user.dart';
 import 'package:platzitripsapp/User/repository/auth_repository.dart';
 import 'package:platzitripsapp/User/repository/cloud_firestone_api.dart';
@@ -34,7 +35,8 @@ class UserBloc extends Bloc {
       .where('userOwner', isEqualTo: Firestore.instance.document("${CloudFirestoneApi().USERS}/${uid}"))
       .snapshots();
 
-  List<ProfilePlace> buildPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot);
+  List<ProfilePlace> buildMyPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildMyPlaces(placesListSnapshot);
+  List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot);
 
   //3.- register a place on database
   Future<void> updatePlaceData(Place place) => _cloudFirestoneRepository.updatePlaceData(place);

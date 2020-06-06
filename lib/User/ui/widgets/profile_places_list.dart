@@ -28,11 +28,11 @@ class ProfilePlacesList extends StatelessWidget {
                 return CircularProgressIndicator();
               case ConnectionState.done:
                 return Column(
-                  children: _userBloc.buildPlaces(snapshot.data.documents),
+                  children: _userBloc.buildMyPlaces(snapshot.data.documents),
                 );
               case ConnectionState.active:
                 return Column(
-                  children: _userBloc.buildPlaces(snapshot.data.documents),
+                  children: _userBloc.buildMyPlaces(snapshot.data.documents),
                 );
               default:
                 return CircularProgressIndicator();
