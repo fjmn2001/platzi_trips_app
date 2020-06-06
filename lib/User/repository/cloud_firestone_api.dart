@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:platzitripsapp/Place/model/place.dart';
 import 'package:platzitripsapp/User/model/user.dart';
+import 'package:platzitripsapp/User/ui/widgets/profile_place.dart';
 
 class CloudFirestoneApi {
   final String USERS = 'users';
@@ -43,6 +44,20 @@ class CloudFirestoneApi {
           });
         });
       });
+    });
+  }
+
+  List<ProfilePlace> buildPlaces (List<DocumentSnapshot> placesListSnapshot) {
+    List<ProfilePlace> profilePlaces = List<ProfilePlace>();
+
+    placesListSnapshot.forEach((DocumentSnapshot p) {
+      profilePlaces.add(ProfilePlace(
+        Place(
+            name: p.data['name'],
+            description: p.data['description'],
+            urlImage: p.data['urlImage']
+        )
+      ));
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -7,7 +8,9 @@ import 'package:platzitripsapp/Place/model/place.dart';
 import 'package:platzitripsapp/Place/repository/firebase_storage_repository.dart';
 import 'package:platzitripsapp/User/model/user.dart';
 import 'package:platzitripsapp/User/repository/auth_repository.dart';
+import 'package:platzitripsapp/User/repository/cloud_firestone_api.dart';
 import 'package:platzitripsapp/User/repository/cloud_firestone_repository.dart';
+import 'package:platzitripsapp/User/ui/widgets/profile_place.dart';
 
 class UserBloc extends Bloc {
 
@@ -24,6 +27,10 @@ class UserBloc extends Bloc {
 
   //2.- register a user on database
   void updateUserData(User user) => _cloudFirestoneRepository.updateUserDataFirestone(user);
+  Stream<QuerySnapshot> _placesListStream = Firestore.instance.collection(CloudFirestoneApi().PLACES).snapshots();
+  Stream<QuerySnapshot> get placesStream => _placesListStream;
+
+  List<ProfilePlace> buildPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot);
 
   //3.- register a place on database
   Future<void> updatePlaceData(Place place) => _cloudFirestoneRepository.updatePlaceData(place);

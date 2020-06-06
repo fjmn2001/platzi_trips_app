@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitripsapp/Place/model/place.dart';
+import 'package:platzitripsapp/User/bloc/bloc_user.dart';
 import 'package:platzitripsapp/User/ui/widgets/profile_place.dart';
 
 class ProfilePlacesList extends StatelessWidget {
 
+  UserBloc _userBloc;
   Place place = Place(
     name: 'Knuckles Mountains Range',
     description: 'Hiking. Water fall hunting. Natural bath',
@@ -20,6 +23,7 @@ class ProfilePlacesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _userBloc = BlocProvider.of<UserBloc>(context);
     return Container(
       margin: EdgeInsets.only(
         top: 10.0,
@@ -27,11 +31,21 @@ class ProfilePlacesList extends StatelessWidget {
         right: 20.0,
         bottom: 10.0
       ),
-      child: Column(
-        children: <Widget>[
-          ProfilePlace(place),
-          ProfilePlace(place2),
-        ],
+      child: StreamBuilder(
+          stream: _userBloc.placesStream,
+          builder: (context, AsyncSnapshot snapshot) {
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting:
+                return CircularProgressIndicator();
+              case ConnectionState.none:
+              case ConnectionState.active:
+              case ConnectionState.done:
+                return Column(
+                  children: _userBloc.buildPlaces(snapshot.data.documents),
+                );
+              default:
+            }
+          }
       ),
     );
   }
