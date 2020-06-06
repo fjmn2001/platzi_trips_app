@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:platzitripsapp/widgets/floating_action_button_green.dart';
@@ -8,32 +9,24 @@ class CardImageWithFabIcon extends StatelessWidget {
   final double height;
   final double width;
   final double left;
-  File file;
-  String urlImage;
+  String pathImage;
   final VoidCallback onPressedFabIcon;
   final IconData iconData;
-  ImageProvider image;
+  bool internet = true;
 
   CardImageWithFabIcon({
     Key key,
     @required this.height,
     @required this.width,
     @required this.left,
-    this.file,
-    this.urlImage,
+    @required this.pathImage,
     @required this.onPressedFabIcon,
-    @required this.iconData
+    @required this.iconData,
+    this.internet
   });
 
   @override
   Widget build(BuildContext context) {
-
-    if(this.urlImage != null) {
-      this.image = NetworkImage(this.urlImage);
-    } else if(this.file != null) {
-      this.image = FileImage(this.file);
-    }
-
     final card = Container(
       height: height,
       width: width,
@@ -41,8 +34,9 @@ class CardImageWithFabIcon extends StatelessWidget {
       decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            //image: FileImage(file),
-            image: image
+            image: internet
+                ? CachedNetworkImageProvider(pathImage)
+                :AssetImage(pathImage)
           ),
           borderRadius: BorderRadius.all(Radius.circular(10)),
         shape: BoxShape.rectangle,

@@ -52,6 +52,7 @@ class _cardImageList extends State {
       children: places.map((place){
         return CardImageWithFabIcon(
           pathImage: place.urlImage,
+          internet: true,
           width: 300.0,
           height: 250.0,
           left: 20.0,
@@ -88,7 +89,8 @@ class _cardImageList extends State {
       scrollDirection: Axis.horizontal,
       children: places.map((place){
         return CardImageWithFabIcon(
-          urlImage: place.urlImage,
+          pathImage: place.urlImage,
+          internet: true,
           width: 300.0,
           height: 250.0,
           left: 20.0,
