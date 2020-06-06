@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,12 +37,17 @@ class UserBloc extends Bloc {
       .snapshots();
 
   List<ProfilePlace> buildMyPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildMyPlaces(placesListSnapshot);
-  List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot);
+  List<Place> buildPlaces(List<DocumentSnapshot> placesListSnapshot, User user) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot, user);
   Future<void> likePlace(Place place,String uid) => _cloudFirestoneRepository.likePlace(place, uid);
 
   //3.- register a place on database
   Future<void> updatePlaceData(Place place) => _cloudFirestoneRepository.updatePlaceData(place);
   Future<StorageUploadTask> uploadFile(String path, File image) => _firebaseStorageRepository.uploadFile(path, image);
+
+  //4.-
+  StreamController placeSelectedStreamController =  StreamController();
+  Stream get placeSelectedStream => placeSelectedStreamController.stream;
+  StreamSink get placeSelectedSink =>  placeSelectedStreamController.sink;
 
   void singOut() async => _authRepository.singOut();
 

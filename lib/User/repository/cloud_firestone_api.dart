@@ -67,8 +67,8 @@ class CloudFirestoneApi {
     return profilePlaces;
   }
 
-  List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot, User user) {
-    List places = List();
+  List<Place> buildPlaces(List<DocumentSnapshot> placesListSnapshot, User user) {
+    List<Place> places = List<Place>();
 
     placesListSnapshot.forEach((p)  {
       Place place = Place(id: p.documentID, name: p.data["name"], description: p.data["description"],
