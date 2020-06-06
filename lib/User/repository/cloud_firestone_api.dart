@@ -33,6 +33,7 @@ class CloudFirestoneApi {
         'name': place.name,
         'description': place.description,
         'likes': place.likes,
+        'urlImage': place.urlImage,
         'userOwner': _db.document('${USERS}/${user.uid}')
       }).then((DocumentReference dr) {
         dr.get().then((DocumentSnapshot snapshot) {
@@ -59,5 +60,7 @@ class CloudFirestoneApi {
         )
       ));
     });
+
+    return profilePlaces;
   }
 }
