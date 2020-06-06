@@ -67,24 +67,35 @@ class CloudFirestoneApi {
     return profilePlaces;
   }
 
-  List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot) {
-    List<CardImageWithFabIcon> placeCards = List<CardImageWithFabIcon>();
-    double width = 350;
-    double height = 250;
-    double left = 20;
-    IconData iconData = Icons.favorite_border;
+  List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot, User user) {
+    List places = List();
 
-    placesListSnapshot.forEach((DocumentSnapshot p) {
-      placeCards.add(CardImageWithFabIcon(
-        urlImage: p.data['urlImage'],
-        iconData: iconData,
-        left: left,
-        height: height,
-        width: width,
-        onPressedFabIcon: () {},
-      ));
+    placesListSnapshot.forEach((p)  {
+      Place place = Place(id: p.documentID, name: p.data["name"], description: p.data["description"],
+          urlImage: p.data["urlImage"],likes: p.data["likes"]
+      );
+      List usersLikedRefs =  p.data["usersLiked"];
+      place.liked = false;
+      usersLikedRefs?.forEach((drUL){
+        if(user.uid == drUL.documentID){
+          place.liked = true;
+        }
+      });
+      places.add(place);
     });
+    return places;
+  }
 
-    return placeCards;
+  Future likePlace(Place place,String uid) async {
+    await _db.collection(PLACES).document(place.id).get().then((DocumentSnapshot place_snapshot) {
+      int likes = place_snapshot.data['liks'];
+
+      _db.collection(PLACES).document(place.id).updateData({
+        'likes': place.liked ? likes + 1 : likes - 1,
+        'usersLiked': place.liked
+            ? FieldValue.arrayUnion([_db.document("${USERS}/${uid}")])
+            : FieldValue.arrayRemove([_db.document("${USERS}/${uid}")])
+      });
+    });
   }
 }

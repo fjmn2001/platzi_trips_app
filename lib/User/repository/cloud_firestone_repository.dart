@@ -11,6 +11,7 @@ class CloudFirestoneRepository {
   void updateUserDataFirestone(User user) => _cloudFirestoneApi.updateUserData(user);
 
   Future<void> updatePlaceData(Place place) => _cloudFirestoneApi.updatePlaceData(place);
+  Future<void> likePlace(Place place,String uid) => _cloudFirestoneApi.likePlace(place, uid);
 
   List<ProfilePlace> buildMyPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneApi.buildMyPlaces(placesListSnapshot);
   List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneApi.buildPlaces(placesListSnapshot);

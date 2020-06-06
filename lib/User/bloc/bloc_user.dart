@@ -37,6 +37,7 @@ class UserBloc extends Bloc {
 
   List<ProfilePlace> buildMyPlaces (List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildMyPlaces(placesListSnapshot);
   List<CardImageWithFabIcon> buildPlaces(List<DocumentSnapshot> placesListSnapshot) => _cloudFirestoneRepository.buildPlaces(placesListSnapshot);
+  Future<void> likePlace(Place place,String uid) => _cloudFirestoneRepository.likePlace(place, uid);
 
   //3.- register a place on database
   Future<void> updatePlaceData(Place place) => _cloudFirestoneRepository.updatePlaceData(place);
