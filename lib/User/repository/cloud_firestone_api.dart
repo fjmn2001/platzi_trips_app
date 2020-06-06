@@ -32,7 +32,16 @@ class CloudFirestoneApi {
         'name': place.name,
         'description': place.description,
         'likes': place.likes,
-        'userOwner': '${USERS}/${user.uid}'
+        'userOwner': _db.document('${USERS}/${user.uid}')
+      }).then((DocumentReference dr) {
+        dr.get().then((DocumentSnapshot snapshot) {
+          DocumentReference userRef = _db.collection(USERS).document(user.uid);
+          userRef.updateData({
+            'myPlaces' : FieldValue.arrayUnion([
+              _db.collection(PLACES).document(snapshot.documentID)
+            ])
+          });
+        });
       });
     });
   }
