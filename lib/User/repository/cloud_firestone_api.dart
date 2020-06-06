@@ -88,7 +88,7 @@ class CloudFirestoneApi {
 
   Future likePlace(Place place,String uid) async {
     await _db.collection(PLACES).document(place.id).get().then((DocumentSnapshot place_snapshot) {
-      int likes = place_snapshot.data['liks'];
+      int likes = place_snapshot.data['likes'];
 
       _db.collection(PLACES).document(place.id).updateData({
         'likes': place.liked ? likes + 1 : likes - 1,
